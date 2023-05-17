@@ -45,5 +45,14 @@
                 description="Search on Stack Overflow description">
             <add-to-group group-id="ConsoleEditorPopupMenu" anchor="last"/>
         </action>
+
+        <action
+                id="depollo.CodeReview"
+                class="CodeReviewAction"
+                text="CodeReview for GPT"
+                icon="icons/gpt-icon.png"
+                description="Search on Stack Overflow description">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
     </actions>
 </idea-plugin>
