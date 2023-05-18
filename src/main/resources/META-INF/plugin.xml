@@ -21,6 +21,9 @@
                 displayName="Depollo Settings"
                 parentId="preferences.Tools">
         </applicationConfigurable>
+
+        <toolWindow id="depolloWindow" anchor="right" icon="/icons/gpt-icon.png"
+                    factoryClass="MyToolWindowFactory"/>
     </extensions>
 
     <actions>
@@ -31,16 +34,18 @@
                 id="depollo.AskQuestion.ToolsMenu"
                 class="AskQuestionAction"
                 text="Ask Question on Stack Overflow"
-                icon="icons/so-icon.png"
+                icon="/icons/so-icon.png"
                 description="Ask a Question on Stack Overflow">
+
             <add-to-group group-id="ToolsMenu" anchor="last"/>
+
         </action>
 
         <action
                 id="depollo.Search.Editor"
                 class="SearchAction"
                 text="Search on Stack Overflow"
-                icon="icons/so-icon.png"
+                icon="/icons/so-icon.png"
                 description="Search on Stack Overflow description">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
         </action>
@@ -48,16 +53,17 @@
                 id="depollo.Search.Console"
                 class="SearchAction"
                 text="Search on Stack Overflow"
-                icon="icons/so-icon.png"
+                icon="/icons/so-icon.png"
                 description="Search on Stack Overflow description">
             <add-to-group group-id="ConsoleEditorPopupMenu" anchor="last"/>
+
         </action>
 
         <action
                 id="depollo.CodeReview"
                 class="CodeReviewAction"
                 text="CodeReview for GPT"
-                icon="icons/gpt-icon.png"
+                icon="/icons/gpt-icon.png"
                 description="Search on Stack Overflow description">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
         </action>

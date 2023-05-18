@@ -17,7 +17,7 @@ import com.intellij.ui.components.fields.ExpandableTextField;
 import persistent.DepolloSettingState;
 
 public class SettingsPanel implements Configurable, Disposable {
-    private JPanel myMainPanel;
+    private JPanel mainPanel;
     // 토큰 입력 에리어
     private JPanel tokenTitledBorderBox;
     // 토큰 입력 에리어 > 토큰 input
@@ -62,7 +62,7 @@ public class SettingsPanel implements Configurable, Disposable {
 
     @Override
     public @Nullable JComponent createComponent() {
-        return myMainPanel;
+        return mainPanel;
     }
 
 

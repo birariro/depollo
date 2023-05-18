@@ -16,6 +16,7 @@ public class SearchAction extends AnAction {
 
 	@Override
 	public void actionPerformed(@NotNull AnActionEvent e) {
+
 		Optional<PsiFile> psiFile = Optional.ofNullable(e.getData(LangDataKeys.PSI_FILE));
 		String languageTag = psiFile
 			.map(PsiFile::getLanguage)
@@ -28,7 +29,7 @@ public class SearchAction extends AnAction {
 		CaretModel caretModel = editor.getCaretModel();
 		String selectedText = caretModel.getCurrentCaret().getSelectedText();
 
-		BrowserUtil.browse("https://stackoverflow.com/search?q=" + languageTag + selectedText);
+		BrowserUtil.browse("https://stackoverflow.com/search?q=" + selectedText);
 	}
 
 	@Override
