@@ -8,13 +8,13 @@ import org.jetbrains.annotations.Nullable;
 
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.options.Configurable;
-import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.NlsContexts;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.ui.TitledSeparator;
-import com.intellij.ui.components.BrowserLink;
-import com.intellij.ui.components.JBTextField;
 import com.intellij.ui.components.fields.ExpandableTextField;
+
+import persistent.DepolloSettingState;
 
 public class SettingsPanel implements Configurable, Disposable {
     private JPanel myMainPanel;
@@ -36,7 +36,7 @@ public class SettingsPanel implements Configurable, Disposable {
         expireTimeField.setEnabled(false);
         expireTimeField.setEditable(false);
         loginButton.addActionListener(e -> {
-            Messages.showInputDialog("트큰 얻기", "트큰 얻기", Messages.getQuestionIcon());
+            Messages.showInputDialog("토큰 얻기", "토큰 얻기", Messages.getQuestionIcon());
         });
     }
     public ExpandableTextField getAccessTokenField() {
@@ -48,6 +48,13 @@ public class SettingsPanel implements Configurable, Disposable {
 
     }
 
+    @Override
+    public void reset() {
+        DepolloSettingState state = DepolloSettingState.getInstance();
+
+        accessTokenField.setText(state.accessToken);
+        expireTimeField.setText(state.expireTime);
+    }
     @Override
     public @NlsContexts.ConfigurableName String getDisplayName() {
         return "Depollo";
@@ -66,13 +73,20 @@ public class SettingsPanel implements Configurable, Disposable {
 
     }
 
+    //설정 화면에서 apply 버튼의 활성여부
     @Override
     public boolean isModified() {
-        return false;
+
+        DepolloSettingState state = DepolloSettingState.getInstance();
+
+        return !StringUtil.equals(state.accessToken, accessTokenField.getText()) ||
+            !StringUtil.equals(state.expireTime, expireTimeField.getText());
     }
 
     @Override
-    public void apply() throws ConfigurationException {
-
+    public void apply() {
+        DepolloSettingState state = DepolloSettingState.getInstance();
+        state.accessToken = accessTokenField.getText();
+        state.expireTime = expireTimeField.getText();
     }
 }
