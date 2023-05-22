@@ -22,8 +22,8 @@
                 parentId="preferences.Tools">
         </applicationConfigurable>
 
-        <toolWindow id="depolloWindow" anchor="right" icon="/icons/gpt-icon.png"
-                    factoryClass="MyToolWindowFactory"/>
+        <toolWindow id="CodeReview" anchor="right" icon="/icons/logo-icon.png"
+                    factoryClass="CodeReviewToolWindowFactory"/>
     </extensions>
 
     <actions>
