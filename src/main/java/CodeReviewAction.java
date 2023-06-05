@@ -1,4 +1,5 @@
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +18,15 @@ import com.intellij.ui.content.ContentFactory;
 public class CodeReviewAction extends AnAction {
 
 	private static List<String> questions = new ArrayList<>();
+	private static List<String> questions_result = new ArrayList<>();
 	@Override
 	public void actionPerformed(AnActionEvent e) {
 		// 드래그한 텍스트 얻기
 		String selectedText = e.getDataContext().getData(CommonDataKeys.EDITOR).getSelectionModel().getSelectedText();
 		questions.add(selectedText);
+		//test
+		questions_result.add(selectedText+" result");
+
 
 		// toolWindow 얻기
 		Project project = e.getProject();
@@ -39,26 +44,58 @@ public class CodeReviewAction extends AnAction {
 
 	private Content createContent(List<String> texts) {
 		JPanel mainPanel = new JPanel();
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		mainPanel.setLayout(new GridBagLayout());
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets(5, 5, 5, 5); // 패딩을 위한 insets 설정
 
-		for (String text : texts) {
-			JEditorPane textPane = createBubblePane(text);
-			panel.add(textPane);
-			panel.add(Box.createVerticalStrut(10)); // 간격 추가
+		for (int i = 0; i < texts.size(); i++) {
+			String question = questions.get(i);
+			String questionResult = questions_result.get(i);
+
+			JPanel questionBox = getQuestionBox(question);
+			constraints.gridy = i * 2;
+			mainPanel.add(questionBox, constraints);
+
+			JPanel questionResultBox = getQuestionResultBox(questionResult);
+			constraints.gridy = i * 2 + 1;
+			mainPanel.add(questionResultBox, constraints);
 		}
 
-
-		mainPanel.add(panel);
+		JScrollPane scrollPane = new JScrollPane(mainPanel);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
 		ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
-		return contentFactory.createContent(mainPanel, null, false);
+		return contentFactory.createContent(scrollPane, null, false);
 	}
 
-	private JEditorPane createBubblePane(String text) {
-		JEditorPane textPane = new JEditorPane();
-		textPane.setContentType("text/html");
-		textPane.setText("<html><body><div style='padding: 5px; border: 1px solid black; width: 100%; background-color: #F0F0F0;'>" + text + "</div></body></html>");
-		return textPane;
+	private JPanel getQuestionBox(String text) {
+
+		//바디
+		JPanel panel = new JPanel();
+		//텍스트
+		JLabel jLabel = new JLabel();
+		jLabel.setText("<html><body><div style='padding: 5px; border: 1px solid white; border-radius: 10px; width: 100%; color: black; background-color: #F0F0F0;'>" + text + "</div></body></html>");
+
+		panel.add(jLabel);
+		panel.add(Box.createVerticalStrut(10)); // 간격 추가
+
+		return panel;
+	}
+
+	private JPanel getQuestionResultBox(String text) {
+
+		//바디
+		JPanel panel = new JPanel();
+		//텍스트
+		JLabel jLabel = new JLabel();
+		jLabel.setText("<html><body><div style='padding: 5px; border: 1px solid white; border-radius: 10px; width: 100%; color: red; background-color: #F0F0F0;'>" + text + "</div></body></html>");
+
+		panel.add(jLabel);
+		panel.add(Box.createVerticalStrut(10)); // 간격 추가
+
+		return panel;
 	}
 }
